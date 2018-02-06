@@ -25,7 +25,6 @@ Summary:        %LIBRARY_SUMMARY%
 Url:            https://github.com/%{_devname}/%{_name}
 Group:          Development/Languages/Golang
 Source0:        %{_name}-%{version}.tar.xz
-Source1:        %{_name}.1
 BuildRequires:  golang-packaging
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 %{go_provides}
