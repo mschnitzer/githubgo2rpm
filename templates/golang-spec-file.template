@@ -1,0 +1,52 @@
+#
+# spec file for package golang-github-%LIBRARY_USERNAME%-%LIBRARY_NAME%
+#
+# Copyright (c) %YEAR% SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global _name %LIBRARY_NAME%
+%global _devname %LIBRARY_USERNAME%
+Name:           golang-github-%{_devname}-%{_name}
+Version:        0
+Release:        0
+License:        %LIBRARY_LICENSE%
+Summary:        %LIBRARY_SUMMARY%
+Url:            https://github.com/%{_devname}/%{_name}
+Group:          Development/Languages/Golang
+Source0:        %{_name}-%{version}.tar.xz
+Source1:        %{_name}.1
+BuildRequires:  golang-packaging
+BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+%{go_provides}
+
+%description
+%LIBRARY_DESCRIPTION%.
+
+%prep
+%setup -q -n %{_name}-%{version}
+
+%build
+%goprep github.com/%{_devname}/%{_name}
+%gobuild ...
+
+%install
+%goinstall
+%gosrc
+
+%gofilelist
+
+%files -f file.lst
+%defattr(-,root,root)
+
+%changelog

@@ -1,0 +1,29 @@
+#!/usr/bin/ruby
+
+require 'githubgo2rpm'
+require 'optparse'
+
+options = {}
+
+parser = OptionParser.new do |opts|
+  opts.banner = "Usage: githubgo2rpm --repo GITHUB_REPO --destination DESTINATION"
+
+  opts.on('-r', '--repo GITHUB_REPOSITORY', 'The repository of the golang library on github. e.g.: mschnitzer/example-golang-library') do |github_repository|
+    options[:github_repository] = github_repository
+  end
+
+  opts.on('-d', '--destination DESTINATION', 'The location where the spec and the _service file should be placed.') do |destination|
+    options[:destination] = destination
+  end
+
+  opts.on('-c', '--create-dir', 'Create target directory.') do |create_dir|
+    options[:create_dir] = create_dir
+  end
+end.parse!
+
+unless options[:github_repository] || options[:destination]
+  $stderr.puts "Invalid arguments."
+  exit! 1
+end
+
+GithubGo2Rpm::OBSPackage.new(options[:github_repository]).create_package(options[:destination], options[:create_dir])
